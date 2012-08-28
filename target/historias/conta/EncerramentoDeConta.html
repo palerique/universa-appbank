@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns:concordion="http://www.concordion.org/2007/concordion">
+<head>
+	<link href="../../concordion.css" rel="stylesheet" type="text/css" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+
+<body>
+	<h1>Encerramento de Conta</h1>
+
+	<h3>Descrição:</h3>
+	<p>
+		Como Gerente de Conta, é preciso encerrar uma conta de um cliente e colocá-la no estado de encerrada.
+	</p>
+	
+	<h3>Restrições:</h3>
+	<ul>
+		<li>Uma conta só poderá ser encerrada se não houver saldo disponível, ou seja, o saldo da conta deve ser ZERO.</li>
+		<li>Uma conta só poderá ser encerrada se estiver no estado de Ativa.</li>
+	</ul>
+	
+	<h3>Critérios de Aceitação:</h3>
+	<ul>
+		<li>Quando encerrada a conta deve estar no estado de Encerrada.</li>
+		<li>O saldo da conta encerrada deve ser ZERO.</li>
+	</ul>
+	
+	<div>
+		<h3>Dado que</h3>
+			<p>Considere que exista as seguintes contas cadastradas:</p>
+		
+		<table concordion:execute="insereConta(#numero, #cpf, #tipo, #saldo, #estado)">
+			<tr>
+			    <th concordion:set="#numero">Número</th>
+				<th concordion:set="#cpf">Titular</th>
+				<th concordion:set="#tipo">Tipo</th>
+				<th concordion:set="#saldo">Saldo</th>
+				<th concordion:set="#estado">Estado</th>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td>04693433110</td>
+				<td>Corrente</td>
+				<td>198.00</td>
+				<td>Ativa</td>
+			</tr>
+			<tr>
+				<td>2</td>
+				<td>03203175444</td>
+				<td>Poupança</td>
+				<td>0.00</td>
+				<td>Encerrada</td>
+			</tr>
+			<tr>
+				<td>3</td>
+				<td>77276469115</td>
+				<td>Corrente</td>
+				<td>0.00</td>
+				<td>Ativa</td>
+			</tr>
+		</table>
+		
+		<h3>Quando</h3>
+			<p>Ao encerrar a conta de número <b concordion:set="#numero">1</b> será informado que o
+				<span concordion:assertEquals="encerraConta(#numero)">Conta não pode ser encerrada por possuir saldo</span><span>.</span>
+			</p>
+			
+			<p>Ao encerrar a conta de número <b concordion:set="#numero">2</b> será informado que o
+				será informado que o <span concordion:assertEquals="encerraConta(#numero)">Conta já está encerrada</span><span>.</span>
+			</p>
+			
+			<p>Ao encerrar a conta de número <b concordion:set="#numero">3</b> o sistema 
+				<span concordion:execute="encerraConta(#numero)"> encerrará a conta com sucesso.</span>
+			</p>
+			
+		<h3>Então</h3>
+			<p>As contas deverão estar na seguinte condição:</p>
+		
+		<table concordion:verifyRows="#conta:getContas()">
+			<tr>
+				<th concordion:assertEquals="#conta.numero">Número</th>
+				<th concordion:assertEquals="#conta.cpfDoTitular">Titular</th>
+				<th concordion:assertEquals="#conta.tipoDaConta">Tipo</th>
+				<th concordion:assertEquals="#conta.saldo">Saldo</th>
+				<th concordion:assertEquals="#conta.estadoDaConta">Estado</th>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td>04693433110</td>
+				<td>Corrente</td>
+				<td>198.0</td>
+				<td>Ativa</td>
+			</tr>
+			<tr>
+				<td>2</td>
+				<td>03203175444</td>
+				<td>Poupança</td>
+				<td>0.0</td>
+				<td>Encerrada</td>
+			</tr>
+			<tr>
+				<td>3</td>
+				<td>77276469115</td>
+				<td>Corrente</td>
+				<td>0.0</td>
+				<td>Encerrada</td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns:concordion="http://www.concordion.org/2007/concordion">
+<head>
+	<link href="../../concordion.css" rel="stylesheet" type="text/css" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+
+<body>
+	<h1>Mantém Cliente</h1>
+
+	<h3>Descrição:</h3>
+	<p>
+		Como Gerente de Conta, é preciso manter os dados cadastrais dos clientes da instituição bancária, 
+		podendo executar as operações de inclusão, alteração ou exclusão. 
+		Deve ser verificado se o cliente não tem restrições no CADIN.
+	</p>
+	
+	<h3>Restrições:</h3>
+	<ul>
+		<li>O CPF do cliente deve ser um CPF válido.</li>
+		<li>Não deve haver mais de um cliente com o mesmo CPF.</li>
+		<li>O CPF 02728594430 é o único CPF que há com restrição no Cadin.</li>
+		<li>O login do cliente deve ser um e-mail válido.</li>
+		<li>Não deve haver mais de um cliente com o mesmo login.</li>
+	</ul>
+	
+	<h3>Critérios de Aceitação:</h3>
+	<ul>
+		<li>Quando o cliente estiver pendente junto ao Cadin, a situação do cliente deve ser Pendente, caso contrário, Ativo.</li>
+		<li>Quando realizada uma inclusão, alteração ou exclusão de um cliente, deve-se:</li>
+			<ul>
+	    		<li>Notifica o Cadin - Cadastro de Inadimplentes sobre a atualização cadastral do cliente, 
+	    			informando o CPF e o motivo da atualização que pode ser:</li>
+	    			<ul>
+	    				<li>Para inclusão - Credenciamento de cliente</li>
+	    				<li>Para alteração - Atualização Cadastral</li>
+	    				<li>Para exclusão - Descredenciamento de cliente</li>
+	    			</ul>
+	    	</ul>
+	</ul>
+	
+	<h3>Observação:</h3>
+	<ul>
+		<li>Códigos de retorno do Cadin para notificação de atualização cadastral:
+			<ul>
+				<li>0 - Notificação realizada com sucesso</li>
+				<li>1 - Dados insuficientes para notificação ao Cadin</li>
+				<li>2 - CPF inválido.</li>
+			</ul>
+		</li>
+		<li>Códigos de retorno do Cadin para verificação que o cliente está com restrições:
+			<ul>
+				<li>3 - Cliente com restrições no Cadin</li>
+				<li>4 - Cliente sem restrições no Cadin</li>
+			</ul>
+		</li>
+	</ul>
+</body>
+</html>

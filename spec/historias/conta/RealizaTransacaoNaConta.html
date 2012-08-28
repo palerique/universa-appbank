@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns:concordion="http://www.concordion.org/2007/concordion">
+<head>
+	<link href="../../concordion.css" rel="stylesheet" type="text/css" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+
+<body>
+	<h1>Realiza Transação na Conta</h1>
+
+	<h3>Descrição:</h3>
+	<p>
+		Como Gerente de Conta, é preciso realizar transações financeiras em um conta como um depósito, saque e 
+		transferência entre contas, informando a conta, valor e as demais informações relacionadas a transação.
+		Transação financeira é toda ação que sensibiliza o saldo da conta.
+		É possível também consultar o saldo da conta, porém não é uma transação financeira por não sensibilizar o saldo.
+	</p>
+	
+	<h3>Restrições:</h3>
+	<ul>
+		<li>Deve haver uma conta Corrente ou Poupança aberta para poder realizar as transações, ou seja, uma conta cadastrada.</li>
+		<li>Quando a transação for de saque ou de transferência entre contas, deve haver saldo suficiente na conta, o saldo não pode ficar negativo.</li>
+		<li>Quando a conta for uma conta corrente o débito será tarifado em 1,20 reais. Contas poupanças não são tarifadas.</li>
+		<li>Quando o valor correspondente a transação for maior ou igual a 3.000,00 reais.</li>
+			<ul>
+	    		<li>Notifica o SPB - Sistema de Pagamentos Brasileiro sobre a transação realizada, informando os dados de tipo do 
+	    			transação {1 - Débito, 2 - Crédito}, banco, agência, conta, cpf do titular da conta, valor da transação, 
+	    			identificador da transação de origem.</li>
+	    	</ul>
+	</ul>
+	
+	<h3>Critérios de Aceitação:</h3>
+	<ul>
+		<li>Quando realizado um depósito, deve ser feito um crédito no saldo da conta conforme o valor informado no depósito.</li>
+		<li>Quando realizado um saque, deve ser feito um débito no saldo da conta conforme o valor informado no saque.</li>
+		<li>Quando realizada uma transferência entre contas:
+			<ul>
+				<li>Deve ser feito um débito no saldo da conta de origem conforme o valor informado na transferência.</li>
+				<li>Deve ser feito um crédito no saldo da conta de destino conforme o valor informado na transferência.</li>
+			</ul>
+		</li>
+	</ul>
+	
+	<h3>Observação:</h3>
+	<ul>
+		<li>Códigos de retorno do SPB para o registro de transação:
+			<ul>
+				<li>0 - Notificação realizada com sucesso</li>
+				<li>1 - Dados insuficientes para notificação da transação.</li>
+				<li>2 - CPF do titular da conta inválido.</li>
+			</ul>
+		</li>
+	</ul>
+	
+	<div>
+		<h3>Dado que</h3>
+			<p>Considere que existe aberta uma conta <b concordion:set="#tipo">Corrente</b> de número <b concordion:set="#numero">1</b> 
+				com saldo de <b concordion:set="#saldo">500.0</b><span concordion:execute="insereConta(#numero, #cpf, #tipo, #saldo, #estado)">.</span>
+			</p>
+		
+			<p>Considere que existe aberta uma conta <b concordion:set="#tipo">Poupança</b> de número <b concordion:set="#numero">2</b> 
+				com saldo de <b concordion:set="#saldo">150.0</b><span concordion:execute="insereConta(#numero, #cpf, #tipo, #saldo, #estado)">.</span>
+			</p>
+			
+		<h3>Quando</h3>
+			<p>A conta corrente de número <b concordion:set="#numero">1</b> tem saldo de <b concordion:assertEquals="getSaldo(#numero)">500.0</b>.
+				Ao realizar um saque no valor de <b concordion:set="#valor">501.0</b> 
+				será informado que: <span concordion:assertEquals="saqueEmConta(#numero, #valor)">Conta sem saldo suficiente</span>.
+			</p>
+		
+			<p>A conta corrente de número <b concordion:set="#numero">1</b> tem saldo de <b concordion:assertEquals="getSaldo(#numero)">500.0</b>. 
+				Ao realizar um saque no valor de <b concordion:set="#valor">298.80</b><span concordion:execute="saqueEmConta(#numero, #valor)"> reais</span> 
+				o novo saldo da conta será de <b concordion:assertEquals="getSaldo(#numero)">200.0</b> reais.
+			</p>
+			
+			<p>A conta poupança de número <b concordion:set="#numero">2</b> tem saldo de <b concordion:assertEquals="getSaldo(#numero)">150.0</b>. 
+				Ao realizar um depósito no valor de <b concordion:set="#valor">250.0</b><span concordion:execute="depositoEmConta(#numero, #valor)"> reais</span> 
+				o novo saldo da conta será de <b concordion:assertEquals="getSaldo(#numero)">400.0</b> reais.
+			</p>
+			
+			<p>A conta poupança de número <b concordion:set="#numero">2</b> tem saldo de <b concordion:assertEquals="getSaldo(#numero)">400.0</b>. 
+				Ao realizar um saque no valor de <b concordion:set="#valor">400.00</b><span concordion:execute="saqueEmConta(#numero, #valor)"> reais</span> 
+				o novo saldo da conta será de <b concordion:assertEquals="getSaldo(#numero)">0.0</b> centavos.
+			</p>
+			
+			<p>A conta poupança de número <b concordion:set="#numeroDeOrigem">2</b> tem saldo de <b concordion:assertEquals="getSaldo(#numeroDeOrigem)">0.0</b>
+			    e a conta corrente de número <b concordion:set="#numeroDeDestino">1</b> tem saldo de <b concordion:assertEquals="getSaldo(#numeroDeDestino)">200.0</b>. 
+				Ao realizar uma transferência no valor de <b concordion:set="#valor">10.00</b> reais da conta de número 2 para a conta de número 1
+				será informado que: <span concordion:assertEquals="transferenciaEntreContas(#numeroDeOrigem, #valor, #numeroDeDestino)">Conta sem saldo suficiente</span>.
+			</p>
+			
+			<p>A conta corrente de número <b concordion:set="#numeroDeOrigem">1</b> tem saldo de <b concordion:assertEquals="getSaldo(#numeroDeOrigem)">200.0</b>
+			    e a conta poupança de número <b concordion:set="#numeroDeDestino">2</b> tem saldo de <b concordion:assertEquals="getSaldo(#numeroDeDestino)">0.0</b>. 
+				Ao realizar uma transferência no valor de <b concordion:set="#valor">100.0</b> reais da conta de número 1 para a conta de número 2
+				<span concordion:execute="transferenciaEntreContas(#numeroDeOrigem, #valor, #numeroDeDestino)"></span> teremos a seguinte situação:  
+				o saldo da conta 1 será de <b concordion:assertEquals="getSaldo(#numeroDeOrigem)">98.8</b> reais e 
+				o saldo da conta 2 será de <b concordion:assertEquals="getSaldo(#numeroDeDestino)">100.0</b> reais.
+			</p>
+			
+			<p>Ao tentar realizar um depósito no valor de <b concordion:set="#valor">3000.00</b> reais na conta corrente de número <b concordion:set="#numero">1</b> 
+				que tem saldo de <b concordion:assertEquals="getSaldo(#numero)">98.8</b>, porém sem informar o CPF para o SPB será informado que: 
+				<span concordion:assertEquals="depositoEmContaSemCPFDoTitular(#numero, #valor)">Dados insuficientes para notificação da transação</span> 
+				e mesmo assim o depósito será realizado com sucesso, portanto o saldo da conta corrente de número 1 será de <b concordion:assertEquals="getSaldo(#numero)">3098.8</b>.
+			</p>
+			
+			<p>Ao tentar realizar um depósito no valor de <b concordion:set="#valor">3000.00</b> reais na conta corrente de número <b concordion:set="#numero">1</b> 
+				que tem saldo de <b concordion:assertEquals="getSaldo(#numero)">3098.8</b>, porém informando um CPF inválido para o SPB será informado que: 
+				<span concordion:assertEquals="depositoEmContaComCPFDoTitularInvalido(#numero, #valor)">CPF do titular da conta inválido</span> 
+				e mesmo assim o depósito será realizado com sucesso, portanto o saldo da conta corrente de número 1 será de <b concordion:assertEquals="getSaldo(#numero)">6098.8</b>.
+			</p>
+			
+			<p>Ao tentar realizar um depósito no valor de <b concordion:set="#valor">3901.20</b> reais na conta corrente de número <b concordion:set="#numero">1</b> 
+				que tem saldo de <b concordion:assertEquals="getSaldo(#numero)">6098.8</b>, com todos os dados necessários para o SPB sendo válidos 
+				<span concordion:execute="depositoEmConta(#numero, #valor)"></span> o depósito será realizado com sucesso, 
+				portanto o saldo da conta corrente de número 1 será de <b concordion:assertEquals="getSaldo(#numero)">10000.0</b>.
+			</p>
+	</div>
+</body>
+</html>

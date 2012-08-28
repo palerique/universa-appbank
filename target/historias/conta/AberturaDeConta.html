@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns:concordion="http://www.concordion.org/2007/concordion">
+<head>
+	<link href="../../concordion.css" rel="stylesheet" type="text/css" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+
+<body>
+	<h1>Abertura de Conta</h1>
+
+	<h3>Descrição:</h3>
+	<p>
+		Como Gerente de Conta, é preciso abrir uma nova conta para um cliente previamente cadastrado, 
+		informando o tipo da conta que o cliente deseja abrir, Conta Corrente ou Conta Poupança.
+	</p>
+	
+	<h3>Restrições:</h3>
+	<ul>
+		<li>Deve haver um cliente previamente cadastrado e que não esteja pendente junto ao Cadin.</li>
+		<li>O CPF 02728594430 é o único CPF que há com restrição no Cadin.</li>
+	</ul>
+	
+	<h3>Critérios de Aceitação:</h3>
+	<ul>
+		<li>Deve-se gerar um número sequencial único para a conta na agência no ato da efetivação da abertura da conta.</li>
+		<li>O saldo da conta aberta deve ser ZERO.</li>
+		<li>Quando a conta aberta for uma conta corrente, o limite do cheque especial deve ser de 1000,00.</li>
+		<li>Quando a conta aberta for uma conta poupança, a data de aniversário da conta deve ser o primeiro dia.</li>
+		<li>O estado da conta aberta será Ativa.</li>
+	</ul>
+	
+	<div>
+		<h3>Dado que</h3>
+			<p>Considere que exista os seguintes clientes cadastrados:</p>
+		
+		<table concordion:execute="insereCliente(#cpf, #nome, #login, #senha, #situacao)">
+			<tr>
+				<th concordion:set="#cpf">CPF</th>
+				<th concordion:set="#nome">Nome</th>
+				<th concordion:set="#login">Login</th>
+				<th concordion:set="#senha">Senha</th>
+				<th concordion:set="#situacao">Situação</th>
+			</tr>
+			<tr>
+				<td>04693433110</td>
+				<td>Julia Roberts</td>
+				<td>julia@roberts.com</td>
+				<td>juli</td>
+				<td>Ativo</td>
+			</tr>
+			<tr>
+				<td>02728594430</td>
+				<td>Nicole Kidman</td>
+				<td>nicole@kidman.com</td>
+				<td>nick</td>
+				<td>Pendente</td>
+			</tr>
+		</table>
+		
+		<h3>Quando</h3>
+			<p>Ao abrir uma conta <b concordion:set="#tipo">Corrente</b> para o cliente de CPF: 
+				<b concordion:set="#cpf">02728594430</b>
+				será informado que o <span concordion:assertEquals="abreConta(#cpf, #tipo)">Cliente está pendente no Cadin</span><span>.</span>
+			</p>
+			
+			<p>Ao abrir uma conta <b concordion:set="#tipo">Poupança</b> para o cliente de CPF:
+				<b concordion:set="#cpf">04693433110</b>
+				o sistema <span concordion:execute="abreConta(#cpf, #tipo)">abrirá a conta poupança com sucesso.</span>
+			</p>
+			
+			<p>Ao abrir uma conta <b concordion:set="#tipo">Corrente</b> para o cliente de CPF:
+				<b concordion:set="#cpf">04693433110</b>
+				o sistema <span concordion:execute="abreConta(#cpf, #tipo)">abrirá a conta corrente com sucesso.</span>
+			</p>
+			
+		<h3>Então</h3>
+			<p>A conta aberta deve estar na seguinte condição:</p>
+		
+		<table concordion:verifyRows="#conta:getContas()">
+			<tr>
+				<th concordion:assertEquals="#conta.numero">Número</th>
+				<th concordion:assertEquals="#conta.agencia">Agência</th>
+				<th concordion:assertEquals="#conta.cpfDoTitular">CPF</th>
+				<th concordion:assertEquals="#conta.tipoDaConta">Tipo</th>
+				<th concordion:assertEquals="#conta.saldo">Saldo</th>
+				<th concordion:assertEquals="#conta.limiteDoChequeEspecial">Limite do Cheque Especial</th>
+				<th concordion:assertEquals="#conta.diaDeAniversario">Dia de Aniversário</th>
+				<th concordion:assertEquals="#conta.estadoDaConta">Estado</th>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td>1234</td>
+				<td>04693433110</td>
+				<td>Poupança</td>
+				<td>0.0</td>
+				<td>0.0</td>
+				<td>1</td>
+				<td>Ativa</td>
+			</tr>
+			<tr>
+				<td>2</td>
+				<td>1234</td>
+				<td>04693433110</td>
+				<td>Corrente</td>
+				<td>0.0</td>
+				<td>1000.0</td>
+				<td>0</td>
+				<td>Ativa</td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>
