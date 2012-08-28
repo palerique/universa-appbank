@@ -4,12 +4,11 @@
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="src" path="spec"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Estudos/universa/projetos/phd-appbank/lib/concordion/ognl-2.6.9.jar" sourcepath="C:/Users/jandr/.m2/repository/ognl/ognl/2.6.9/ognl-2.6.9-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Estudos/universa/projetos/phd-appbank/lib/concordion/xom-1.2.5.jar"/>
+	<classpathentry kind="lib" path="C:/Estudos/universa/projetos/phd-appbank/lib/concordion/concordion-1.4.2.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="/home/ph/git/universa-appbank/lib/concordion/concordion-1.4.2.jar"/>
-	<classpathentry kind="lib" path="/home/ph/git/universa-appbank/lib/concordion/junit-4.8.2.jar"/>
-	<classpathentry kind="lib" path="/home/ph/git/universa-appbank/lib/concordion/ognl-2.6.9.jar"/>
-	<classpathentry kind="lib" path="/home/ph/git/universa-appbank/lib/concordion/xom-1.2.5.jar"/>
-	<classpathentry kind="lib" path="/home/ph/git/universa-appbank/lib/externos/cadin.jar"/>
-	<classpathentry kind="lib" path="/home/ph/git/universa-appbank/lib/externos/spb.jar"/>
+	<classpathentry kind="lib" path="C:/Estudos/universa/projetos/universa-appbank/lib/externos/cadin.jar"/>
+	<classpathentry kind="lib" path="C:/Estudos/universa/projetos/universa-appbank/lib/externos/spb.jar"/>
 	<classpathentry kind="output" path="target"/>
 </classpath>
