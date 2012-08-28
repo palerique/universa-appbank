@@ -1,6 +1,12 @@
 #Classes compiladas:
 *.class
 
+#Configurações do projeto:
+.project
+
+#Configurações de classpath:
+.classpath
+
 # Package Files #
 #*.jar
 #*.war
