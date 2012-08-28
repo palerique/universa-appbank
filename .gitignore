@@ -1,4 +1,5 @@
-#*.class
+#Classes compiladas:
+*.class
 
 # Package Files #
 #*.jar
