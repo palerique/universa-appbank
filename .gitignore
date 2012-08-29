@@ -1,6 +1,9 @@
 #Classes compiladas:
 *.class
 
+#Settings do eclipse:
+.settings
+
 #Configurações do projeto:
 .project
 
