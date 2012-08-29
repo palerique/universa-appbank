@@ -11,12 +11,16 @@
  */
 package br.org.universa.appbank.persistencia.map;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import br.org.universa.appbank.negocio.dominio.Cliente;
 import br.org.universa.appbank.persistencia.DaoCliente;
 
 public class DaoClienteMap implements DaoCliente {
 
 	private static DaoClienteMap instancia = null;
+	private Map<String, Cliente> clientes = new HashMap<String, Cliente>();
 
 	private DaoClienteMap() {
 		// Construtor privado
@@ -47,8 +51,11 @@ public class DaoClienteMap implements DaoCliente {
 
 	@Override
 	public Cliente consultaPorCpf(String cpf) {
-		// TODO Implementar o método
+		if (clientes.containsKey(cpf)) {
+			return clientes.get(cpf);
+		}
 		return null;
+
 	}
 
 	@Override
