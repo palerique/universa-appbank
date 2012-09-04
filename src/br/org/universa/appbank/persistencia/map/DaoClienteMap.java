@@ -64,12 +64,16 @@ public class DaoClienteMap implements DaoCliente {
 	@Override
 	public Cliente consultaPorLogin(String login) {
 
-		// TODO Implementar o método
+		for (Map.Entry<String, Cliente> cliente : clientes.entrySet()) {
+			if (cliente.getValue().getLogin().equals(login)) {
+				return cliente.getValue();
+			}
+		}
 		return null;
 	}
 
 	@Override
 	public void removeTodos() {
-		// TODO Implementar o método
+		clientes = new HashMap<String, Cliente>();
 	}
 }
