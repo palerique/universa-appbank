@@ -38,9 +38,7 @@ public class FachadaBancaria {
 	}
 
 	public Cliente consultaCliente(String cpf) throws Exception {
-
 		return ControladorCliente.get().consultaCliente(cpf);
-
 	}
 
 	public void incluiCliente(Cliente cliente) throws Exception {

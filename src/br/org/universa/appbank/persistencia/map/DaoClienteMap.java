@@ -36,17 +36,20 @@ public class DaoClienteMap implements DaoCliente {
 
 	@Override
 	public void insere(Cliente cliente) {
-		// TODO Implementar o método
+		if (!clientes.containsKey(cliente.getCpf())) {
+			clientes.put(cliente.getCpf(), cliente);
+		}
 	}
 
 	@Override
 	public void atualiza(Cliente cliente) {
-		// TODO Implementar o método
+		clientes.remove(cliente.getCpf());
+		clientes.put(cliente.getCpf(), cliente);
 	}
 
 	@Override
 	public void remove(Cliente cliente) {
-		// TODO Implementar o método
+		clientes.remove(cliente.getCpf());
 	}
 
 	@Override
@@ -60,6 +63,7 @@ public class DaoClienteMap implements DaoCliente {
 
 	@Override
 	public Cliente consultaPorLogin(String login) {
+
 		// TODO Implementar o método
 		return null;
 	}

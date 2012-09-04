@@ -22,20 +22,17 @@ public class ControladorCliente implements GestorCliente {
 
 	@Override
 	public void incluiCliente(Cliente cliente) throws Exception {
-		// TODO Auto-generated method stub
-
+		DaoClienteMap.get().insere(cliente);
 	}
 
 	@Override
 	public void alteraCliente(Cliente cliente) throws Exception {
-		// TODO Auto-generated method stub
-
+		DaoClienteMap.get().atualiza(cliente);
 	}
 
 	@Override
 	public void excluiCliente(Cliente cliente) throws Exception {
-		// TODO Auto-generated method stub
-
+		DaoClienteMap.get().remove(cliente);
 	}
 
 	@Override
