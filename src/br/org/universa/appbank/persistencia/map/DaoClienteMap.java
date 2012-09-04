@@ -36,9 +36,7 @@ public class DaoClienteMap implements DaoCliente {
 
 	@Override
 	public void insere(Cliente cliente) {
-		if (!clientes.containsKey(cliente.getCpf())) {
-			clientes.put(cliente.getCpf(), cliente);
-		}
+		clientes.put(cliente.getCpf(), cliente);
 	}
 
 	@Override

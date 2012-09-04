@@ -188,6 +188,7 @@ public class FachadaBancariaTest {
 			Assert.assertEquals(SituacaoDoCliente.PENDENTE.getChave(), cliente
 					.getSituacao().getChave());
 		} catch (Exception e) {
+			e.printStackTrace();
 			Assert.fail(e.getMessage());
 		}
 	}

@@ -40,10 +40,10 @@ public class Cliente {
 
 	public Cliente(String cpf, String nome, String login, String senha) {
 		super();
-		this.cpf = cpf;
-		this.nome = nome;
-		this.login = login;
-		this.senha = senha;
+		setCpf(cpf);
+		setNome(nome);
+		setLogin(login);
+		setSenha(senha);
 	}
 
 	public void setCpf(String cpf) {
