@@ -38,53 +38,51 @@ public class FachadaBancaria {
 	}
 
 	public Cliente consultaCliente(String cpf) throws Exception {
-	
+
 		return ControladorCliente.get().consultaCliente(cpf);
-		
+
 	}
 
 	public void incluiCliente(Cliente cliente) throws Exception {
-		// TODO Implementar o método
+		ControladorCliente.get().incluiCliente(cliente);
 	}
 
 	public void alteraCliente(Cliente cliente) throws Exception {
-		// TODO Implementar o método
+		ControladorCliente.get().alteraCliente(cliente);
 	}
 
 	public void excluiCliente(Cliente cliente) throws Exception {
-		// TODO Implementar o método
+		ControladorCliente.get().alteraCliente(cliente);
 	}
 
 	public Conta consultaConta(int numero) throws Exception {
-		// TODO Implementar o método
-		return null;
+		return ControladorConta.get().consultaConta(numero);
 	}
 
 	public List<Conta> consultaTodasContas() throws Exception {
-		// TODO Implementar o método
-		return null;
+		return ControladorConta.get().consultaTodasContas();
 	}
 
 	public int abreConta(Cliente titular, TipoDaConta tipoDaConta)
 			throws Exception {
-		// TODO Implementar o método
-		return 0;
+		return ControladorConta.get().abreConta(titular, tipoDaConta);
 	}
 
 	public void encerraConta(Conta conta) throws Exception {
-		// TODO Implementar o método
+		ControladorConta.get().encerraConta(conta);
 	}
 
 	public void depositoEmConta(Conta conta, double valor) throws Exception {
-		// TODO Implementar o método
+		ControladorConta.get().depositoEmConta(conta, valor);
 	}
 
 	public void saqueEmConta(Conta conta, double valor) throws Exception {
-		// TODO Implementar o método
+		ControladorConta.get().saqueEmConta(conta, valor);
 	}
 
 	public void transfereEntreContas(Conta contaDeDebito, Conta contaDeCredito,
 			double valor) throws Exception {
-		// TODO Implementar o método
+		ControladorConta.get().transfereEntreContas(contaDeDebito,
+				contaDeCredito, valor);
 	}
 }
