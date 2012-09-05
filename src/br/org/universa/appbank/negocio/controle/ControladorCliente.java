@@ -68,11 +68,20 @@ public class ControladorCliente implements GestorCliente {
 
 	@Override
 	public void alteraCliente(Cliente cliente) throws Exception {
-		if (DaoClienteMap.get().consultaPorCpf(cliente.getCpf()) != null) {
-			DaoClienteMap.get().atualiza(cliente);
-		} else {
+
+		validaDadosCliente(cliente);
+
+		Cliente clienteAntigo = DaoClienteMap.get().consultaPorCpf(
+				cliente.getCpf());
+
+		if (clienteAntigo == null) {
 			throw new RuntimeException(Mensagens.CLIENTE_NAO_ENCONTRADO);
 		}
+		if (!clienteAntigo.getLogin().equals(cliente.getLogin())
+				&& DaoClienteMap.get().consultaPorLogin(cliente.getLogin()) != null) {
+			throw new RuntimeException(Mensagens.LOGIN_JA_UTILIZADO);
+		}
+		DaoClienteMap.get().atualiza(cliente);
 	}
 
 	@Override
