@@ -73,9 +73,6 @@ public class ControladorCliente implements GestorCliente {
 	@Override
 	public void alteraCliente(Cliente cliente) throws Exception {
 
-		// validaDadosCliente(cliente);
-		cliente.validaDados();
-
 		Cliente clienteAntigo = DaoClienteMap.get().consultaPorCpf(
 				cliente.getCpf());
 
@@ -86,6 +83,10 @@ public class ControladorCliente implements GestorCliente {
 				&& DaoClienteMap.get().consultaPorLogin(cliente.getLogin()) != null) {
 			throw new RuntimeException(Mensagens.LOGIN_JA_UTILIZADO);
 		}
+
+		// validaDadosCliente(cliente);
+		cliente.validaDados();
+
 		DaoClienteMap.get().atualiza(cliente);
 		CadinFacade.get().notificaAtualizacaoCadastral(cliente.getCpf(),
 				MotivoDaAtualizacaoCadastral.ATUALIZACAO_DE_DADOS_CADASTRAIS);
