@@ -1,8 +1,10 @@
 package br.org.universa.appbank.negocio.controle;
 
+import br.com.phd.cadin.servico.CadinFacade;
 import br.org.universa.appbank.negocio.comum.Mensagens;
 import br.org.universa.appbank.negocio.comum.UtilHelper;
 import br.org.universa.appbank.negocio.dominio.Cliente;
+import br.org.universa.appbank.negocio.dominio.SituacaoDoCliente;
 import br.org.universa.appbank.persistencia.map.DaoClienteMap;
 
 public class ControladorCliente implements GestorCliente {
@@ -25,14 +27,28 @@ public class ControladorCliente implements GestorCliente {
 	public void incluiCliente(Cliente cliente) throws Exception {
 		validaDadosCliente(cliente);
 
+		validaClienteBanco(cliente);
+
+		validaClienteCadin(cliente);
+
+		DaoClienteMap.get().insere(cliente);
+	}
+
+	private void validaClienteCadin(Cliente cliente) {
+		if (CadinFacade.get().cpfPresenteNoCadin(cliente.getCpf()) == 3) {
+			cliente.setSituacao(SituacaoDoCliente.PENDENTE);
+		} else {
+			cliente.setSituacao(SituacaoDoCliente.ATIVO);
+		}
+	}
+
+	private void validaClienteBanco(Cliente cliente) {
 		if (DaoClienteMap.get().consultaPorCpf(cliente.getCpf()) != null) {
 			throw new RuntimeException(Mensagens.CPF_JA_CADASTRADO);
 		}
 		if (DaoClienteMap.get().consultaPorLogin(cliente.getLogin()) != null) {
 			throw new RuntimeException(Mensagens.LOGIN_JA_UTILIZADO);
 		}
-
-		DaoClienteMap.get().insere(cliente);
 	}
 
 	private void validaDadosCliente(Cliente cliente) {
@@ -52,7 +68,11 @@ public class ControladorCliente implements GestorCliente {
 
 	@Override
 	public void alteraCliente(Cliente cliente) throws Exception {
-		DaoClienteMap.get().atualiza(cliente);
+		if (DaoClienteMap.get().consultaPorCpf(cliente.getCpf()) != null) {
+			DaoClienteMap.get().atualiza(cliente);
+		} else {
+			throw new RuntimeException(Mensagens.CLIENTE_NAO_ENCONTRADO);
+		}
 	}
 
 	@Override

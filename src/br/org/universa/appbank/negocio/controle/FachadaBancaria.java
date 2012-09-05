@@ -50,7 +50,7 @@ public class FachadaBancaria {
 	}
 
 	public void excluiCliente(Cliente cliente) throws Exception {
-		ControladorCliente.get().alteraCliente(cliente);
+		ControladorCliente.get().excluiCliente(cliente);
 	}
 
 	public Conta consultaConta(int numero) throws Exception {

@@ -72,6 +72,6 @@ public class DaoClienteMap implements DaoCliente {
 
 	@Override
 	public void removeTodos() {
-		clientes = new HashMap<String, Cliente>();
+		clientes.clear();
 	}
 }
