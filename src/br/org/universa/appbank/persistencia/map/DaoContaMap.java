@@ -11,7 +11,10 @@
  */
 package br.org.universa.appbank.persistencia.map;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import br.org.universa.appbank.negocio.dominio.Conta;
 import br.org.universa.appbank.persistencia.DaoConta;
@@ -19,6 +22,7 @@ import br.org.universa.appbank.persistencia.DaoConta;
 public class DaoContaMap implements DaoConta {
 
 	private static DaoContaMap instancia = null;
+	private Map<Integer, Conta> contas = new HashMap<Integer, Conta>();
 
 	private DaoContaMap() {
 		// Construtor privado
@@ -34,34 +38,32 @@ public class DaoContaMap implements DaoConta {
 
 	@Override
 	public void insere(Conta conta) {
-		// TODO Implementar o método
+		contas.put(conta.getNumero(), conta);
 	}
 
 	@Override
 	public void atualiza(Conta conta) {
-		// TODO Implementar o método
+		contas.remove(conta.getNumero());
+		contas.put(conta.getNumero(), conta);
 	}
 
 	@Override
 	public Conta consulta(int numero) {
-		// TODO Implementar o método
-		return null;
+		return contas.get(numero);
 	}
 
 	@Override
 	public int geraNumero() {
-		// TODO Implementar o método
-		return 0;
+		return contas.size();
 	}
 
 	@Override
 	public List<Conta> consultaTodas() {
-		// TODO Implementar o método
-		return null;
+		return new ArrayList<Conta>(contas.values());
 	}
 
 	@Override
 	public void removeTodos() {
-		// TODO Implementar o método
+		contas.clear();
 	}
 }
