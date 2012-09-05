@@ -25,7 +25,8 @@ public class ControladorCliente implements GestorCliente {
 
 	@Override
 	public void incluiCliente(Cliente cliente) throws Exception {
-		validaDadosCliente(cliente);
+		// validaDadosCliente(cliente);
+		cliente.validaDados();
 
 		validaClienteBanco(cliente);
 
@@ -69,7 +70,8 @@ public class ControladorCliente implements GestorCliente {
 	@Override
 	public void alteraCliente(Cliente cliente) throws Exception {
 
-		validaDadosCliente(cliente);
+		// validaDadosCliente(cliente);
+		cliente.validaDados();
 
 		Cliente clienteAntigo = DaoClienteMap.get().consultaPorCpf(
 				cliente.getCpf());
