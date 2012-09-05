@@ -1,6 +1,7 @@
 package br.org.universa.appbank.negocio.controle;
 
 import br.com.phd.cadin.servico.CadinFacade;
+import br.com.phd.cadin.servico.MotivoDaAtualizacaoCadastral;
 import br.org.universa.appbank.negocio.comum.Mensagens;
 import br.org.universa.appbank.negocio.comum.UtilHelper;
 import br.org.universa.appbank.negocio.dominio.Cliente;
@@ -25,13 +26,16 @@ public class ControladorCliente implements GestorCliente {
 
 	@Override
 	public void incluiCliente(Cliente cliente) throws Exception {
-		validaDadosCliente(cliente);
+		// validaDadosCliente(cliente);
+		cliente.validaDados();
 
 		validaClienteBanco(cliente);
 
 		validaClienteCadin(cliente);
 
 		DaoClienteMap.get().insere(cliente);
+		CadinFacade.get().notificaAtualizacaoCadastral(cliente.getCpf(),
+				MotivoDaAtualizacaoCadastral.CREDENCIAMENTO_DE_CLIENTE);
 	}
 
 	private void validaClienteCadin(Cliente cliente) {
@@ -69,7 +73,8 @@ public class ControladorCliente implements GestorCliente {
 	@Override
 	public void alteraCliente(Cliente cliente) throws Exception {
 
-		validaDadosCliente(cliente);
+		// validaDadosCliente(cliente);
+		cliente.validaDados();
 
 		Cliente clienteAntigo = DaoClienteMap.get().consultaPorCpf(
 				cliente.getCpf());
@@ -82,11 +87,15 @@ public class ControladorCliente implements GestorCliente {
 			throw new RuntimeException(Mensagens.LOGIN_JA_UTILIZADO);
 		}
 		DaoClienteMap.get().atualiza(cliente);
+		CadinFacade.get().notificaAtualizacaoCadastral(cliente.getCpf(),
+				MotivoDaAtualizacaoCadastral.ATUALIZACAO_DE_DADOS_CADASTRAIS);
 	}
 
 	@Override
 	public void excluiCliente(Cliente cliente) throws Exception {
 		DaoClienteMap.get().remove(cliente);
+		CadinFacade.get().notificaAtualizacaoCadastral(cliente.getCpf(),
+				MotivoDaAtualizacaoCadastral.DESCREDENCIAMENTO_DE_CLIENTE);
 	}
 
 	@Override
