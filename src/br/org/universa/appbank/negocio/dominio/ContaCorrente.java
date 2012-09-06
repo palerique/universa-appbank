@@ -24,8 +24,15 @@ public class ContaCorrente extends Conta {
 
 	private double limiteDoChequeEspecial;
 
+	public ContaCorrente() {
+		this.limiteDoChequeEspecial = 1000.0;
+	}
+
 	public void debita(double valor) throws Exception {
-		// TODO Implementar o método
+		if (saldo < (valor + 1.20)) {
+			throw new RuntimeException(Mensagens.SALDO_INSUFICIENTE);
+		}
+		saldo -= valor + 1.20;
 	}
 
 	public double getLimiteDoChequeEspecial() {

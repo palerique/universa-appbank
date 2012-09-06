@@ -78,9 +78,9 @@ public class FachadaBancaria {
 		ControladorConta.get().saqueEmConta(conta, valor);
 	}
 
-	public void transfereEntreContas(Conta contaDeDebito, Conta contaDeCredito,
+	public void transfereEntreContas(Conta contaDeOrigem, Conta contaDeDestino,
 			double valor) throws Exception {
-		ControladorConta.get().transfereEntreContas(contaDeDebito,
-				contaDeCredito, valor);
+		ControladorConta.get().transfereEntreContas(contaDeOrigem,
+				contaDeDestino, valor);
 	}
 }

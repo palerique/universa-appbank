@@ -83,7 +83,7 @@ public abstract class Conta {
 	}
 
 	public void credita(double valor) throws Exception {
-		// TODO Implementar o método
+		saldo += valor;
 	}
 
 	public abstract void debita(double valor) throws Exception;

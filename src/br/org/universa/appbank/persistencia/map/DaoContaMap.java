@@ -54,7 +54,7 @@ public class DaoContaMap implements DaoConta {
 
 	@Override
 	public int geraNumero() {
-		return contas.size();
+		return contas.size() + 1;
 	}
 
 	@Override

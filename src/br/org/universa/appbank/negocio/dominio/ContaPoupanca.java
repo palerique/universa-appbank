@@ -24,6 +24,12 @@ public class ContaPoupanca extends Conta {
 
 	private int diaDeAniversario;
 
+	public ContaPoupanca() {
+
+		this.diaDeAniversario = 1;
+
+	}
+
 	public int getDiaDeAniversario() {
 		return diaDeAniversario;
 	}
@@ -33,7 +39,10 @@ public class ContaPoupanca extends Conta {
 	}
 
 	public void debita(double valor) throws Exception {
-		// TODO Implementar o método
+		if (saldo < valor) {
+			throw new RuntimeException(Mensagens.SALDO_INSUFICIENTE);
+		}
+		saldo -= valor;
 	}
 
 	@Override
