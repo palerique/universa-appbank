@@ -53,7 +53,7 @@ public class ControladorConta implements GestorConta {
 		conta.setEstadoDaConta(EstadoDaConta.ATIVA);
 		conta.setAgencia(1234);
 
-		// TODO: conta.validaDados();
+		conta.validaDados();
 
 		if (CadinFacade.get().cpfPresenteNoCadin(conta.getTitular().getCpf()) == 3) {
 			throw new RuntimeException(Mensagens.CLIENTE_PENDENTE_NO_CADIN);
