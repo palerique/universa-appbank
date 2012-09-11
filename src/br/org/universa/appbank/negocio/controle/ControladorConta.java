@@ -67,8 +67,6 @@ public class ControladorConta implements GestorConta {
 	@Override
 	public void encerraConta(Conta conta) throws Exception {
 
-		System.out.println("SALDO: " + conta.getSaldo());
-
 		if (conta.getSaldo() != Double.valueOf(0)) {
 			throw new RuntimeException(Mensagens.CONTA_POSSUI_SALDO);
 		}
