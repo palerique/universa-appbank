@@ -82,19 +82,19 @@ public abstract class Conta {
 		this.estadoDaConta = estadoDaConta;
 	}
 
-	public void credita(double valor) throws Exception {
+	public void credita(double valor) throws RuntimeException {
 		saldo += valor;
 	}
 
-	public abstract void debita(double valor) throws Exception;
+	public abstract void debita(double valor) throws RuntimeException;
 
-	public void validaDados() throws Exception {
+	public void validaDados() throws RuntimeException {
 		if (UtilHelper.isCampoPreenchido(titular)
 				&& UtilHelper.isCampoPreenchido(agencia)
 				&& UtilHelper.isCampoPreenchido(numero)
 				&& UtilHelper.isCampoPreenchido(saldo)
 				&& UtilHelper.isCampoPreenchido(tipoDaConta) == false) {
-			throw new Exception(
+			throw new RuntimeException(
 					Mensagens.CAMPOS_OBRIGATORIOS_CONTA_NAO_PREENCHIDOS);
 		}
 	}

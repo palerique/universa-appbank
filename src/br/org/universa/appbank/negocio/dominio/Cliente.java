@@ -1,9 +1,7 @@
 /*
  * PhD Software do Brasil / Universa Escola de Gestão.
  * email - professor.flavio.roberto@gmail.com
- *
  * App Bank - Aplicação Bancária.
- *
  * OBS: Todos os códigos estão sendo oferecidos com a intenção única de
  * estimular o aprendizado. Não podem ser usados com fins comerciais sem
  * autorização prévia do autor. Se redistribuídos para outros sites, o autor e
@@ -20,25 +18,28 @@ import br.org.universa.appbank.negocio.comum.UtilHelper;
  * @author flavio.roberto
  */
 public class Cliente {
+
 	/** CPF do cliente */
-	private String cpf;
+	private String				cpf;
 
 	/** Nome do cliente */
-	private String nome;
+	private String				nome;
 
 	/** Login do cliente */
-	private String login;
+	private String				login;
 
 	/** Senha do cliente */
-	private String senha;
+	private String				senha;
 
 	/** Estado do cliente */
-	private SituacaoDoCliente situacao;
+	private SituacaoDoCliente	situacao;
 
 	public Cliente() {
+
 	}
 
 	public Cliente(String cpf, String nome, String login, String senha) {
+
 		super();
 		setCpf(cpf);
 		setNome(nome);
@@ -46,70 +47,86 @@ public class Cliente {
 		setSenha(senha);
 	}
 
-	public void setCpf(String cpf) {
+	public final void setCpf(final String cpf) {
+
 		this.cpf = cpf;
 	}
 
 	public String getCpf() {
+
 		return this.cpf;
 	}
 
-	public void setNome(String nome) {
+	public final void setNome(String nome) {
+
 		this.nome = nome;
 	}
 
 	public String getNome() {
+
 		return this.nome;
 	}
 
-	public void setLogin(String login) {
+	public final void setLogin(String login) {
+
 		this.login = login;
 	}
 
 	public String getLogin() {
+
 		return this.login;
 	}
 
-	public void setSenha(String senha) {
+	public final void setSenha(String senha) {
+
 		this.senha = senha;
 	}
 
 	public String getSenha() {
+
 		return this.senha;
 	}
 
-	public void setSituacao(SituacaoDoCliente situacao) {
+	public final void setSituacao(SituacaoDoCliente situacao) {
+
 		this.situacao = situacao;
 	}
 
 	public SituacaoDoCliente getSituacao() {
+
 		return situacao;
 	}
 
-	public void validaDados() throws Exception {
+	public void validaDados() throws RuntimeException {
+
 		validaCpf();
 		validaNome();
 		validaLogin();
 		validaSenha();
 	}
 
-	private void validaCpf() throws Exception {
-		if (!UtilHelper.isCpfValido(cpf))
-			throw new Exception(Mensagens.CPF_INVALIDO);
+	private void validaCpf() throws RuntimeException {
+
+		if (!UtilHelper.isCpfValido(cpf)) {
+			throw new RuntimeException(Mensagens.CPF_INVALIDO);
+		}
 	}
 
-	private void validaNome() throws Exception {
+	private void validaNome() throws RuntimeException {
+
 		if (!UtilHelper.isCampoPreenchido(nome))
-			throw new Exception(Mensagens.NOME_INVALIDO);
+			throw new RuntimeException(Mensagens.NOME_INVALIDO);
 	}
 
-	private void validaLogin() throws Exception {
+	private void validaLogin() throws RuntimeException {
+
 		if (!UtilHelper.isLoginValido(login))
-			throw new Exception(Mensagens.LOGIN_INVALIDO);
+			throw new RuntimeException(Mensagens.LOGIN_INVALIDO);
 	}
 
-	private void validaSenha() throws Exception {
+	private void validaSenha() throws RuntimeException {
+
 		if (!UtilHelper.isCampoPreenchido(senha))
-			throw new Exception(Mensagens.SENHA_INVALIDA);
+			throw new RuntimeException(Mensagens.SENHA_INVALIDA);
 	}
 }

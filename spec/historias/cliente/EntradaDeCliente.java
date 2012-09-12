@@ -34,10 +34,9 @@ public class EntradaDeCliente {
 
 	public void insere(String cpf, String nome, String login, String senha,
 			String situacao) throws Exception {
-		Cliente cliente = null;
+		Cliente cliente = new Cliente();
 
 		if (UtilHelper.isCampoPreenchido(cpf)) {
-			cliente = new Cliente();
 			cliente.setCpf(cpf);
 		}
 

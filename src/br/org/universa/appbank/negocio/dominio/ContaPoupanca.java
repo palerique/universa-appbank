@@ -1,9 +1,7 @@
 /*
  * PhD Software do Brasil / Universa Escola de Gestão.
  * email - professor.flavio.roberto@gmail.com
- *
  * App Bank - Aplicação Bancária.
- *
  * OBS: Todos os códigos estão sendo oferecidos com a intenção única de
  * estimular o aprendizado. Não podem ser usados com fins comerciais sem
  * autorização prévia do autor. Se redistribuídos para outros sites, o autor e
@@ -22,7 +20,7 @@ import br.org.universa.appbank.negocio.comum.UtilHelper;
  */
 public class ContaPoupanca extends Conta {
 
-	private int diaDeAniversario;
+	private int	diaDeAniversario;
 
 	public ContaPoupanca() {
 
@@ -31,14 +29,17 @@ public class ContaPoupanca extends Conta {
 	}
 
 	public int getDiaDeAniversario() {
+
 		return diaDeAniversario;
 	}
 
 	public void setDiaDeAniversario(int diaDeAniversario) {
+
 		this.diaDeAniversario = diaDeAniversario;
 	}
 
-	public void debita(double valor) throws Exception {
+	public void debita(double valor) throws RuntimeException {
+
 		if (saldo < valor) {
 			throw new RuntimeException(Mensagens.SALDO_INSUFICIENTE);
 		}
@@ -46,12 +47,12 @@ public class ContaPoupanca extends Conta {
 	}
 
 	@Override
-	public void validaDados() throws Exception {
+	public void validaDados() throws RuntimeException {
+
 		super.validaDados();
 
 		if (UtilHelper.isCampoPreenchido(diaDeAniversario) == false) {
-			throw new Exception(
-					Mensagens.CAMPOS_OBRIGATORIOS_CONTA_NAO_PREENCHIDOS);
+			throw new RuntimeException(Mensagens.CAMPOS_OBRIGATORIOS_CONTA_NAO_PREENCHIDOS);
 		}
 	}
 }
